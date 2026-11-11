@@ -1,0 +1,22 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+build-*.log
+shot-*.png
+f7.db*
+t.db*
+ref-*.dat
+*.apk
+*.aab
+
+# Signing material and local secrets
+keystore.properties
+keystore/
+.env
+.dev.vars

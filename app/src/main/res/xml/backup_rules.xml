@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- The queue database stores per-download request headers (cookies); keep it off backup. -->
+    <exclude domain="database" path="f7.db" />
+    <include domain="sharedpref" path="f7_settings.xml" />
+    <exclude domain="external" path="staging" />
+</full-backup-content>
