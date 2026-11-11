@@ -377,10 +377,15 @@ fun BrowserScreen(
                             }
 
                             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, sslError: SslError?) {
-                                // Strict TLS: a failed certificate is never bypassed, but now the
-                                // user gets an explanation and a retry instead of a blank page.
+                                // Strict TLS: a failed certificate is never bypassed. Only a failure
+                                // on the page itself is fatal, though - a broken image or analytics
+                                // host must not blank out a page that loaded fine.
                                 handler?.cancel()
+                                val failedHost = runCatching { Uri.parse(sslError?.url.orEmpty()).host }.getOrNull()
+                                val mainHost = runCatching { Uri.parse(view?.url.orEmpty()).host }.getOrNull()
+                                if (failedHost == null || (mainHost != null && failedHost != mainHost)) return
                                 loading = false
+                                progress = 1f
                                 error = BrowserError.Ssl
                             }
                         }
